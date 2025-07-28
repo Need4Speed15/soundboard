@@ -1,6 +1,39 @@
-// 1. Audio file names (in order):
-const that70sShowAudioFiles = [
+const activeAudios = new Map();
+
+function setupSoundButtons(buttonClass, audioFolder, audioFiles) {
+  const buttons = document.querySelectorAll(`.button.${buttonClass}`);
+
+  buttons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      const existingAudio = activeAudios.get(button);
+
+      if (existingAudio) {
+        existingAudio.pause();
+        existingAudio.currentTime = 0;
+        button.style.backgroundColor = "";
+        activeAudios.delete(button);
+        return;
+      }
+
+      const audio = new Audio(`./audio/${audioFolder}/${audioFiles[index]}`);
+      audio.play();
+      button.style.backgroundColor = "#2980b9";
+      activeAudios.set(button, audio);
+
+      audio.addEventListener("ended", () => {
+        button.style.backgroundColor = "";
+        activeAudios.delete(button);
+      });
+    });
+  });
+}
+
+
+
+setupSoundButtons("that70sShow", "that-70s-show", [
+  "Bed Bugs.mp3",
   "Dumbass.mp3",
+  "I Am Daniel.mp3",
   "I Swear Ill Kick His Ass.mp3",
   "Im Gonna Kick So Much Ass.mp3",
   "Im Kickin Your Ass.mp3",
@@ -9,20 +42,22 @@ const that70sShowAudioFiles = [
   "Kick Your Ass For An Hour.mp3",
   "You Dont Have Bad Luck.mp3",
   "You Watch Your Ass.mp3"
-];
+]);
 
-// 2. Select all buttons
-const that70sShowButtons = document.querySelectorAll(".button.that70sShow");
+setupSoundButtons("jason", "jason", [
+  "Jason- always search.m4a",
+  "Jason- Animals.m4a",
+  "Jason- eat me.m4a",
+  "Jason- higher.m4a",
+  "Jason- Red handed.m4a"
+]);
 
-// 3. Loop over each button and add click event
-that70sShowButtons.forEach((button, index) => {
-  button.addEventListener("click", () => {
-    const audio = new Audio(`./audio/that-70s-show/${that70sShowAudioFiles[index]}`);
-    button.style.backgroundColor = "#2980b9";
-    audio.addEventListener("ended", () => {
-      button.style.backgroundColor = ""; // clears inline style back to CSS default
-    });
-    audio.play();
-  });
-});
+setupSoundButtons("videoGames", "video-games", [
+  "Aria math.mp3",
+	"Skyrim tavern1.mp3",
+	"what in oblivion.mp3"
+]);
 
+setupSoundButtons("other", "other", [
+  "trump bs.mp3"
+]);
