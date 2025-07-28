@@ -16,6 +16,11 @@ function setupSoundButtons(buttonClass, audioFolder, audioFiles) {
       }
 
       const audio = new Audio(`./audio/${audioFolder}/${audioFiles[index]}`);
+
+      if (audioFiles[index] === "Aria math.mp3") {
+        audio.volume = 0.8; 
+      }
+      
       audio.play();
       button.style.backgroundColor = "#2980b9";
       activeAudios.set(button, audio);
@@ -61,3 +66,4 @@ setupSoundButtons("videoGames", "video-games", [
 setupSoundButtons("other", "other", [
   "trump bs.mp3"
 ]);
+
