@@ -64,6 +64,7 @@ setupSoundButtons("videoGames", "video-games", [
 ]);
 
 setupSoundButtons("other", "other", [
-  "trump bs.mp3"
+  "trump bs.mp3",
+  "what are you two homos doing.mp3"
 ]);
 
